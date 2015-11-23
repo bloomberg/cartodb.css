@@ -3,12 +3,20 @@
  * Header of CartoDB
  */
 
-@import "compass";
-@import "common/mixins";
-@import "common/sprites";
-@import "common/vars";
+@import "compass/css3/inline-block";
+@import "compass/css3/border-radius";
+@import "compass/css3/opacity";
+@import "compass/css3/images";
+@import "compass/css3/transform";
+@import "compass/css3/text-shadow";
+@import "./mixins";
+@import "./common-sprite";
+@import "./vars";
+@import "../variables/colors";
 
 $text-shadow-color: rgba(black,0.25);
+
+body > .privacy_selector { z-index: 30; }
 
 header { // general header
   position:relative;
@@ -18,60 +26,72 @@ header { // general header
   padding: 30px 0;
 
   $bkgColor: #428AC6;
-
-  background: image-url('layout/relief.png') repeat 0 0 $bkgColor; // IE
-  @include background(image-url("layout/relief.png") repeat 0 0 $bkgColor);
-
-  @include box-shadow(rgba(black, 0.3) 0 0 12px, rgba(0,0,0, 0.09) 0 -5px 3px 0 inset);
-  @include transform-style("linear");
-  @include transition-property("background-color");
-  @include transition-duration(1000ms);
+ // @include background(image-url("layout/new_header_bkg.jpg") repeat center 0); // For IE
+ // @include background(image-url("layout/new_header_bkg.jpg") repeat center 0, linear-gradient(top, #519FD9,#3383C7));
+ // @include box-shadow(rgba(black, 0.3) 0 0 12px, rgba(0,0,0, 0.09) 0 -5px 3px 0 inset);
+  z-index:3;
 
   &:before {
+    background-color: $DarkGrey8;
+    border-bottom: 1px solid black;
     position:absolute;
     content:' ';
     top:0;
     left:0;
     right:0;
     bottom:0;
-    @include background(linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.1)));
+    
     z-index:0;
   }
 
-  border-bottom: 1px solid #2F567E;
-  z-index:2;
-
-  h1 {
+  h1,
+  .logo {
+    position:relative;
     margin:7px 0 0 0;
     a {
       @include inline-block();
       width:93px;
       height:18px;
-      @include icons-sprite(cartodb);
+      @include common-sprite(cartodb);
       @include text-indent();
-      &:focus,&:hover {outline:none; @include icons-sprite(cartodb,$offset-y:-19px)}
+      &:focus,&:hover {outline:none; @include common-sprite(cartodb,$offset-y:-19px)}
+    }
+
+    em.posts {
+      position:absolute;
+      right:-40px;
+      top:-2px;
+      display:none;
+      margin-left:10px;
+      padding:2px 5px 1px;
+      line-height:10px;
+      @include border-radius(2px);
+      font:700 9px $text-fonts2;
+      color:#2483B2;
+      background:white;
+      text-transform:uppercase;
+
+      &.news { background:#E5FF99 }
+      &:hover { cursor:pointer }
     }
   }
 
   ul {
-    display:block;
-    letter-spacing:-4px;
+    position:relative;
+    @include display-flex();
+    @include justify-content(center, center);
+    @include align-items(center, center);
+    margin-top:7px;
     width:auto;
 
-    &.margin {
-      margin-top:8px;
-    }
-
     li {
-      @include inline-block();
       width:auto;
       margin-left:25px;
-      letter-spacing:0;
 
       a {
         font-size:15px;
+        font-weight:300;
         color:white;
-        text-shadow:0 1px $text-shadow-color;
 
         &.dropdown {
           position:relative;
@@ -81,9 +101,9 @@ header { // general header
           &:before {
             position:absolute;
             content:' ';
-            top:-1px;
+            top:50%;
             right:0px;
-            margin:8px 0 0 5px;
+            margin:0 0 0 5px;
             border-left:3px solid transparent;
             border-right:3px solid transparent;
             border-top:3px solid white;
@@ -93,9 +113,9 @@ header { // general header
           &:after {
             position:absolute;
             content:' ';
-            top:-1px;
+            top:50%;
             right:0px;
-            margin:9px 0 0 5px;
+            margin:0 0 0 5px;
             border-left:3px solid transparent;
             border-right:3px solid transparent;
             border-top:3px solid $text-shadow-color;
@@ -104,14 +124,32 @@ header { // general header
         }
 
         &.account {
+          @include display-flex();
+          @include justify-content(center, center);
+          @include align-items(center, center);
+
+          img {
+            width:18px;
+            height:18px;
+            margin-right:6px;
+            @include border-radius(18px);
+          }
+
           &.separator {
             padding:0 20px 0 0;
           }
 
           span {
             position:absolute;
-            top:0;
+            top:50%;
             right:11px;
+            margin-top:-7px;
+            @include opacity(0.6);
+          }
+
+          // Move user account tick a bit
+          &.organization {
+            &:before, &:after { margin-top:1px }
           }
 
           &:hover {
@@ -123,21 +161,21 @@ header { // general header
         &.selected {color:#264565; text-shadow:0 1px rgba(white,0.25); &:hover {text-decoration:none; cursor:default;} &:after {color:rgba(#264565,0.5);} &:before {border-top-color:#264565;}}
         &:focus {outline:none; text-decoration:underline;}
 
-        &.rounded_white {text-shadow:none; &:hover {color:#333333;}}
+        &.rounded.white {text-shadow:none; &:hover {color:#333333;}}
       }
 
       form {
         position:relative;
-        width:247px;
-        height:36px;
+        width:140px;
+        height:auto;
         margin:0;
 
         input[type="text"] {
-          width:207px;
+          width:100px;
           margin:0;
           padding:10px 30px 10px 10px;
           background:rgba(0,0,0,0.20);
-          font:normal 13px "Helvetica",Arial;
+          font:normal 13px $text-fonts2;
           border:none;
           color:#9AB2CB;
           @include border-radius(4px);
@@ -170,304 +208,15 @@ header { // general header
           width:15px;
           height:15px;
           border:none;
-          @include icons-sprite(lens);
+          @include common-sprite(lens);
           @include text-indent();
-          &:focus {outline:none; @include icons-sprite(lens, $offset-y:-15px);}
-          &:hover {cursor:pointer; @include icons-sprite(lens, $offset-y:-15px);}
+          &:focus {outline:none; @include common-sprite(lens, $offset-y:-15px);}
+          &:hover {cursor:pointer; @include common-sprite(lens, $offset-y:-15px);}
         }
       }
     }
+
+    // Admin header
+    &.admin { margin-top:0 }
   }
-
-  &.table { // table view's header
-
-    position:fixed;
-    left:0;
-    top:0;
-    min-width:960px;
-    height:108px;
-    padding:20px 0;
-    overflow:visible;
-    border-bottom: 1px solid rgba(#333333, 0.8);
-    @include box-shadow(rgba(0,0,0,0.09) 0 -5px 3px 0 inset);
-    z-index:2;
-
-
-    h1 {
-
-      margin:7px 0 0 0;
-
-      a {
-        @include inline-block();
-        width:14px;
-        height:13px;
-        @include icons-sprite(back);
-        @include text-indent();
-          opacity: .5;
-
-        &:focus,&:hover {
-          outline:none;
-          @include icons-sprite(back);
-          opacity: 1;
-        }
-      }
-    }
-
-    div.globalerror {
-      position: absolute;
-      top:auto;
-      bottom:0;
-      left:0;
-      width:100%;
-      height:39px;
-      padding:0;
-      overflow:hidden;
-      text-align:center;
-      z-index:1;
-
-      p {
-        @include border-top-radius(3px);
-        margin-top:39px;
-        @include inline-block();
-        height:15px;
-        width:auto;
-        padding:12px 15px;
-        line-height:15px;
-        background:rgba(0,0,0,0.35);
-        font:normal 13px $text-fonts;
-        color:white;
-
-        &.error {
-          color: #EB2466;
-          background-color: #FFEBF1;
-        }
-
-        img {
-          position: relative;
-          top: 3px;
-          margin-right: 5px;
-        }
-
-
-      }
-
-    }
-
-    .inner {
-      width:auto;
-      height: 128px;
-    }
-
-    div.left {
-      position:relative;
-      width:65%;
-      height:129px;
-      margin-left:36px;
-
-      z-index: 10;
-
-      hgroup {
-        @include inline-block();
-        margin: 0 0 0 -15px;
-        width:100%;
-
-        .author {
-          color: #FFF;
-          font-size: 11px;
-          top: 5px;
-          position:relative;
-          margin-left: 5px;
-
-          a {
-            text-decoration: underline;
-            color: #FFF;
-          }
-
-          &:before {
-            content: "by ";
-          }
-        }
-
-        h1,h2,a.button_header {
-          @include inline-block();
-          margin:0;
-          vertical-align:middle;
-          letter-spacing: 0px;
-          width:auto;
-        }
-
-        h1 {
-          line-height:23px;
-        }
-
-        h2 {
-          position:relative;
-          padding:0 0 1px 8px;
-          line-height:30px;
-
-          a {
-            overflow:hidden;
-            display:block;
-            max-width:440px;
-            margin:0;
-            font-size:21px;
-            font-family: $title-fonts;
-            color:white;
-            text-overflow:ellipsis;
-            padding:0;
-            white-space:nowrap;
-            text-shadow:0 1px $text-shadow-color;
-          }
-
-        }
-
-        a.button_header {
-          margin:6px 0 0 10px;
-          @include inline-block();
-        }
-
-      }
-
-      span.table_description {
-        display:block;
-        margin: 3px 0 0 12px;
-
-        p {
-          @include inline-block();
-          width:auto;
-          font-size: 15px;
-          color: rgba(255, 255, 255, 0.5);
-          &:hover {cursor:pointer; color:rgba(255, 255, 255, 1);}
-        }
-      }
-
-      .tags {
-        margin:3px 0 0 15px;
-        @include inline-block();
-
-        &:before {
-          position:relative;
-          content:'|';
-          font-weight:normal;
-          top:1px;
-          left:-9px;
-          font-size: 17px;
-          color:rgba(255,255,255, .3);
-        }
-
-        a {
-          @include inline-block();
-          vertical-align:middle;
-
-          font:normal 11px $text-fonts;
-          text-transform: uppercase;
-          color:white;
-        }
-      }
-
-      nav {
-        position:absolute;
-        left:0;
-        bottom:0;
-        height:40px;
-
-        a.tab {
-          padding: 8px 9px;
-          @include inline-block();
-
-          font-size:15px;
-          color:#fff;
-
-          @include border-radius(3px);
-
-          &:hover {}
-          &:focus {}
-          &:active {}
-
-          &.selected {
-            margin:0;
-
-            color: rgba(black,0.7);
-            background:#fff;
-
-            &:hover {text-decoration:none; cursor:default;}
-            &:focus {}
-            &:active {}
-          }
-
-          &.disabled {
-            &:hover {}
-            &:focus {}
-            &:active {}
-          }
-        }
-      }
-    }
-
-    .shadow {
-      position:absolute;
-      left:0;
-      bottom:0;
-      height:47px;
-      width:100%;
-
-      background:#000;
-      background:rgba(#000, .15);
-      border-top: 1px solid rgba(#000, .12);
-      z-index: 0;
-    }
-
-    ul.options {
-      position:absolute;
-      top:0;
-      right: 0;
-      width:auto;
-      margin:10px 35px 0 0;
-
-      li {
-        position:relative;
-        padding:0 10px;
-        margin:0;
-
-        &:after {
-          position:absolute;
-          content:'|';
-          top:0px;
-          right:0;
-          margin:0;
-          color:rgba(white,0.4);
-        }
-
-        &:last-child {
-          padding-right:0;
-          &:after {display:none}
-        }
-      }
-    }
-  }
-
-  &.query { // add this class when the table has a query applied
-
-    background-color:$cOrange;
-
-    a.clearview { color:$cOrange!important;}
-    h2 a:hover  { text-decoration:none; cursor:default; }
-
-    hgroup span.tags.empty:before { content: ''; }
-
-    span.table_description p {
-
-      i {
-        font-style:italic;
-        @include opacity(0.7);
-      }
-
-      &:hover {
-        text-decoration:none;
-        color:rgba(white, 0.5)!important;
-        cursor:default!important;
-      }
-
-    }
-  } // query
 }

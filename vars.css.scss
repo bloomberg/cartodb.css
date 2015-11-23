@@ -3,14 +3,14 @@
  *  General vars for the project
  */
 
-$w: 960px;   // Min width (TODO: replace when 2.1 is released)
-$nW: 1026px; // New min width for 2.1
+$w:760px;
 
 /* Fonts */
 
-$text-fonts: "Helvetica Neue", "Helvetica", Arial;
-$text-fonts2: "Helvetica", Arial;
-$title-fonts: "Segoe UI Bold","Helvetica Bold", "Helvetica", Arial;
+$text-fonts: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+$text-fonts2: "Helvetica", Arial, sans-serif;
+$title-fonts: "Helvetica", Arial, sans-serif;
+$title-fonts2: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 
 
 /* Base colors */

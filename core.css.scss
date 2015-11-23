@@ -4,10 +4,11 @@
    * - Section, aside, ..
    */
 
-  @import "compass";
+  @import "compass/css3/box-shadow";
+  @import "compass/css3/border-radius";
+  @import "compass/css3/opacity";
   @import "compass/reset";
-  @import "common/sprites";
-  @import "common/vars";
+  @import "./vars";
 
 
   /*
@@ -37,7 +38,7 @@
     line-height:normal;
   }
   h2,h3,h4,h5,h6 {font-weight: bold; font-family: $title-fonts; color:#333333; line-height:normal;}
-  h2 {font-size:31px; letter-spacing:-1px; word-spacing:-1px; line-height:34px; &.special {font-family:$text-fonts}}
+  h2 {font-size:28px; letter-spacing:-1px; word-spacing:-1px; line-height:34px; &.special {font-family:$text-fonts}}
   h3 {font-size:25px;}
   strong {font-weight:bold;}
 
@@ -58,6 +59,7 @@
   .margin15 {margin-top:15px}
   .margin10 {margin-top:10px;}
   .margin5 {margin-top:5px}
+  .margin-bottom-10 { margin-bottom: 10px; }
   .ellipsis {text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
   .hide {display: none;}
   .overflow {overflow:visible}
