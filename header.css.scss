@@ -86,9 +86,13 @@ header { // general header
     margin-top:7px;
     width:auto;
 
+    :first-child {
+      margin-left: 0;
+    }
+
     li {
       width:auto;
-      margin-left:25px;
+      margin-left:10px;
 
       a {
         //bb_header_dropdown
